@@ -13,71 +13,24 @@ N! = 3628800, answer 2; N! = 2432902008176640000, answer: 4.
 Make sure your program works for N! up to 50 000.
 */
 
-const int max = 50000;
-
-void factorial(int arr[], int n);
-string getResult(int arr[]);
-int coutTrailingZerosAtEnd(string number);
+int coutTrailingZerosAtEnd(int n);
 
 int main() {
-    int *arr = new int[max];
-    std::memset(arr, 0, max * sizeof(int));
-    arr[max - 1] = 1;
-
     int number;
     cout << "Enter number for N = ";
     cin >> number;
 
-    factorial(arr, number);
-    string result = getResult(arr);
-    cout << number << "! = " << result << ", answer: " << coutTrailingZerosAtEnd(result) << std::endl;
+    cout << "The number of trailing zeros of " << number << "! is " << coutTrailingZerosAtEnd(number) << "." << std::endl;
 
-    delete[] arr;
     return 0;
 }
 
-void factorial(int arr[], int n) {
-    if(!n) {
-        return;
+int coutTrailingZerosAtEnd(int  n) {
+    int numberOfZeros = 0;
+
+    for (int i = 5; n / i >= 1; i *= 5) {
+          numberOfZeros += n/i;
     }
 
-    int carry = 0;
-
-    for (int i = max - 1; i >= 0; i--) {
-        arr[i] = (arr[i] * n) + carry;
-        carry = arr[i] / 10;
-        arr[i] %= 10;
-    }
-
-    factorial(arr, n - 1);
-}
-
-string getResult(int arr[]) {
-    std::stringstream result("");
-    int flag = 0;
-
-    for (int i = 0; i < max; i++) {
-        if (!flag && arr[i]) {
-            flag = 1;
-        }
-
-        if(flag) {
-            result << arr[i];
-        }
-    }
-
-    return result.str();
-}
-
-int coutTrailingZerosAtEnd(string number) {
-    int count = 0;
-
-    for (int i = number.length() - 1; i >= 0; i--) {
-        if(number[i] == '0') {
-            count++;
-        } else {
-            break;
-        }
-    }
-    return count;
+    return numberOfZeros;
 }
