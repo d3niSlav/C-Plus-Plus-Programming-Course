@@ -1,0 +1,6 @@
+This is just a test file.
+Each line of this file
+will be compared to a line from file2
+
+Also it compares the number of lines
+each file has.
